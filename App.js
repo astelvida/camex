@@ -1,39 +1,28 @@
 import React from 'react'
-import { StyleSheet, useColorScheme } from 'react-native'
+import { useColorScheme, Platform } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { useTfLoaded } from './hooks/useTensorFlow'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation/Navigation'
-import useTensorFlowLoaded from './hooks/useTensorFlowLoaded'
 import LoadingView from './components/LoadingView'
 
 export default function App() {
    const isLoadingComplete = useCachedResources()
-   const isTfReady = useTensorFlowLoaded()
+   const isTfReady = useTfLoaded()
    const colorScheme = useColorScheme()
 
    if (!isTfReady || !isLoadingComplete) {
-      return (!isTfReady && !isLoadingComplete) 
-         ? <LoadingView>Loading... </LoadingView> 
-         : !isTfReady 
-            ? <LoadingView>Loading TensorFlow</LoadingView> 
-            : <LoadingView>Loading Resources</LoadingView>
+      const messages = []
+      !isLoadingComplete && messages.push('Loading App Resources...')
+      !isTfReady && messages.push('Loading TensorFlow..')
+      return <LoadingView>{messages.join('\n')} </LoadingView> 
    }
    
    return (
       <SafeAreaProvider>
-         <StatusBar />
+         {/* <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} /> */}
          <Navigation colorScheme={colorScheme} />
       </SafeAreaProvider>
    )
-   
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-   },
-})

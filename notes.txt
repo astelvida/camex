@@ -1,5 +1,5 @@
 Object {
-  "addListener": [Function addListener],
+  "addListener": [Function addListener],  
   "canGoBack": [Function canGoBack],
   "dispatch": [Function dispatch],
   "getParent": [Function getParent],

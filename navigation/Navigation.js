@@ -1,11 +1,9 @@
 import * as React from 'react'
-
 import { useColorScheme } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-// import { createStackNavigator } from '@react-navigation/stack'
-// import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
 import Themes from '../constants/Themes'
 import NotFoundScreen from '../screens/NotFoundScreen'
@@ -14,7 +12,6 @@ import OnboardingScreen from '../onboarding/OnboardingScreen'
 import TensorCameraScreen from '../tensorCamera/TensorCameraScreen'
 
 const Stack = createNativeStackNavigator()
-// const Stack = createStackNavigator()
 
 export default function Navigation({ colorScheme }) {
    return (
@@ -32,19 +29,18 @@ export default function Navigation({ colorScheme }) {
    )
 }
 
-
-const Blank = ({ navigation, route }) => {
-
-   React.useEffect(() => {
-      console.warn(route)
-      alert(' Navigated at Blank!')
-      navigation.navigate('TensorCamera')
-   }, [navigation])
+const Blank = ({ navigation }) => {
+   useFocusEffect(
+      React.useCallback(() => {
+         console.log(' Navigated at Blank!')
+         navigation.navigate({name: 'TensorCamera', key: 'blank'})
+      }, [navigation])
+   )
    return null
 }
 
-
 const Tab = createBottomTabNavigator()
+
 const HomeTabs = ({ navigation }) => {
    const colorScheme = useColorScheme()
    const { text: textColor, tint } = Themes[colorScheme]
@@ -60,11 +56,12 @@ const HomeTabs = ({ navigation }) => {
    
    const tabPress = (e) => {
       e.preventDefault()
-      navigation.navigate('TensorCamera')
+      navigation.navigate({name: 'TensorCamera',  key: 'tabPress' })
    }
 
    return (
       <Tab.Navigator
+         initialRouteName="Camera"
          screenOptions={({ route }) => ({
             tabBarIcon: ({ size, color }) => (
                <AntDesign name={routesToIconsMap[route.name]} size={size} color={color} />
@@ -78,11 +75,6 @@ const HomeTabs = ({ navigation }) => {
       </Tab.Navigator>
    )
 }
-
-// // <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-// // <Stack.Group screenOptions={{ presentation: 'modal' }}>
-// //     <Stack.Screen name="Modal" component={ModalScreen} />
-// // </Stack.Group>
 // options={({ navigation }) => ({
 //   headerRight: (/* { tint, pressColor, pressOpacity } */) => (
 //       <Pressable

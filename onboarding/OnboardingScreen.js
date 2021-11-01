@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, StyleSheet, View, Animated } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { introSlides } from '../data'
-import AnimatedNextButton from '../components/AnimatedNextButton'
+import { introSlides } from './data'
+import AnimatedNextButton from './AnimatedNextButton'
 import OnboardingStep from './OnboardingStep'
 import Paginator from './Paginator'
 

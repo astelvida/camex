@@ -1,8 +1,11 @@
-import React from 'react';
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Layout from '../constants/Layout'
+import { useModel } from '../hooks/useTensorFlow'
 
-export default function PredictionsList({ predictions = [] }) {
+export default function PredictionsList() {
+   const {predictions} = useModel()
+   
    return (
       <View style={styles.container}>
          {predictions.map((p, i) => (
