@@ -24,11 +24,4 @@ const colors = {
    salmon: 'rgba(243, 91, 89, 1)',
 }
 
-const colorScheme = {
-   background1: '#B721FF',
-   background2: '#21D4FD',
-   primary: '#B721FF',
-   secondary: '#21D4FD',
-}
-
 export default colors
